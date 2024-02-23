@@ -9,7 +9,7 @@ class User(models.Model):
 class add_manga(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=255)
-    image = models.ImageField() 
+    image = models.ImageField(upload_to="none", blank=True) 
     details = models.TextField()
     rating = models.IntegerField()
     
@@ -18,7 +18,7 @@ class add_manga(models.Model):
 class add_anime(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=255)
-    image = models.ImageField()
+    image = models.ImageField(upload_to="animeSuki/static/images")
     details = models.TextField()
     rating = models.IntegerField()
     
