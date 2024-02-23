@@ -1,0 +1,15 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+<!DOCTYPE html>
+<html>
+  <head>
+    {% load bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %}
+  </head>
+  <body>
+    {% include "partials/navigation.html" %}   
+      {% block content %}
+
+      {% endblock %}
+    </div>
+  </body>
+</html>

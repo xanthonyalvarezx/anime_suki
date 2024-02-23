@@ -1,0 +1,21 @@
+#nav-list{
+    list-style-type: none;
+}
+
+#nav-wrapper{
+    width: 10rem;
+    height: 100vh;
+  
+}
+
+.nav-list-item a{
+    text-decoration: none;
+    color: black;
+}
+.nav-list-item:first-of-type{
+    border: 1px double black; 
+    width: 6rem;
+    padding: 1rem;
+    text-align: center;
+    margin:1rem 5rem 0 0;
+}

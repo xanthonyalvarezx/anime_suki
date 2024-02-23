@@ -1,0 +1,9 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    background-image: url("../../static/images/cherry_blossom.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
