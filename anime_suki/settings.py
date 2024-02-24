@@ -42,8 +42,6 @@ INSTALLED_APPS = [
     'animeSuki',
     'bootstrap5',
     'corsheaders',
-    'crispy_forms',
-    "crispy_bootstrap5",
 ]
 
 MIDDLEWARE = [

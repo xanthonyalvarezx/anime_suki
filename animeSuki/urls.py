@@ -10,4 +10,5 @@ urlpatterns = [
     path("news_letter", views.newsLetter, name="news_letter"),
     path("add_anime", views.addAnime, name="add_anime"),
     path("add_manga", views.addManga, name="add_manga"),
+    path("search_manga", views.searchManga, name="search_manga"),
 ]

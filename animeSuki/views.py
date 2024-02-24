@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 import requests
 from .forms import addAnimeForm, addMangaForm
 from django.contrib import messages
@@ -72,3 +72,13 @@ def addManga(request):
             messages.error(request, 'Error saving form')
             form = addAnimeForm()
     return render(request, 'add_manga.html',  {'form': form} )
+
+
+def searchManga(request):
+        response = requests.get("https://api.jikan.moe/v4/manga?q=" + "hellsing")
+        if response.status_code == 200:  
+            data = response.json() 
+            print(data['data'])
+            return render(request, 'search_manga.html', {'response': data['data']})
+        else:  
+            return HttpResponse("Error retrieving data") 

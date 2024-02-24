@@ -1,0 +1,20 @@
+{% include "partials/base.html" %} {% load static %}
+<link rel="stylesheet" href="{% static 'css/search.css' %}" />
+<title>{% block title %}アニメ好き Search Manga{% endblock %}</title>
+{% block content %}
+<div id="manga-info-wrapper">
+    <input class="form-control search-bar" placeholder="Search manga"/>
+    <div id="row">
+        {% for res in response %} 
+            {% if "Hellsing" in res.title %}
+                <div class="image-wrapper">
+                    <img src="{{res.images.webp.image_url}}" />
+                    <div class="details-div">
+                        <span>{{res.title}}</span>
+                    </div>
+                </div>
+            {% endif %} 
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
