@@ -37,3 +37,18 @@ class addMangaForm(forms.ModelForm):
           ]
       
         
+class searchMangaForm(forms.Form):
+    SEARCH_TERMS = (
+      ("title", "Title"),
+      ("author", "Author"),
+    )
+    searchBy = forms.ChoiceField(
+      widget=forms.Select(attrs={'class':'form-control', }),
+      choices = SEARCH_TERMS,
+        label='Search By:'
+      )
+    searchText = forms.CharField(
+      max_length=300,
+      widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': 'Search Manga'}),
+      label=''
+      )

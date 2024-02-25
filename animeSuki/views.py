@@ -1,8 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 import requests
-from .forms import addAnimeForm, addMangaForm
+from .forms import addAnimeForm, addMangaForm, searchMangaForm
 from django.contrib import messages
+import json
+from AnilistPython import Anilist
+anilist = Anilist()
 
 
 def landing(request):
@@ -75,10 +78,18 @@ def addManga(request):
 
 
 def searchManga(request):
-        response = requests.get("https://api.jikan.moe/v4/manga?q=" + "hellsing")
-        if response.status_code == 200:  
-            data = response.json() 
-            print(data['data'])
-            return render(request, 'search_manga.html', {'response': data['data']})
+        form = searchMangaForm(request.POST)
+        if request.method == "POST":
+            if form.is_valid():
+                searchBy = form.cleaned_data['searchBy']
+                searchText = form.cleaned_data['searchText']
+                print(searchBy, searchText)
+                res = anilist.get_manga(searchText)  
+                res['desc'] = res['desc'].replace("<br>", "")
+                res['desc'] = res['desc'].replace("<i>", "")
+                res['desc'] = res['desc'].replace("</i>", "")
+                print(res)
+                return render(request, 'search_manga.html', {'response': res})
         else:  
-            return HttpResponse("Error retrieving data") 
+                    return HttpResponse("Error retrieving data") 
+        return render(request, 'search_manga.html', {'form': form})

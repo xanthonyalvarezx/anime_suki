@@ -1,30 +1,98 @@
 #manga-info-wrapper{
-    margin: 3rem;
-    width: 80vw;
+    width: 100vw;
     display: flex;
-    flex-wrap: wrap;
-    gap: 3rem;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    
 }
 
-#manga-info-wrapper img{
-    width: 10rem;
-    height: 15rem;
+#inner-wrapper{
+    display:flex;
+    flex-direction: column;
+    margin-left: 3rem;
+    border:1rem double #000000;
+    background-color: color-mix(in srgb, #d3aca6 40%, transparent 60%);
+    width: 85vw;
+    max-width: 85vw;
+    height: 90vh;
+    max-height: 90vh;
+}
+#search-input-div{
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 3rem;
+}
+#search-input-div #id_searchText{
+    margin-top: 1.5rem;
+    width: 25rem;
 }
 
-.details-div{
-    max-width: 10rem;
+#details-div{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-weight: 600;
+    margin-top: 1rem ;
+    gap : 2rem;
+}
+#row{
+    margin-top: -1rem;
+    border: 1px solid blue;
 }
 
 .image-wrapper{
-    max-height: 15rem;
+    border: 1px solid green;
+}
+.description {
+    max-width: 15rem;
+
+}
+.banner{
+    border: 1px solid red;
+    max-width: 100%;
+    
 }
 
-#row{
+.errorlist{
+    display: none;
+}
+#back-arrow{
+    width: 2rem;
+    
+}
+
+.arrow-div{
     display: flex;
-    flex-wrap: wrap;
-    gap: 3rem;
+    gap:1;
+    width: fit-content;
+    margin: -5rem 0 0 .5rem;
+    
+}
+.arrow-div:hover{
+    cursor: pointer;
+}
+
+.banner-image{
+    height: 100%;
+}
+
+.banner-image-div{
+    max-height: 50%;
+}
+
+.description{
+    font-weight: 600;
+}
+
+.genre-list{
+    list-style-type: none;
+}
+.no-banner{
+    background-color: #000000;
+    height: 50%;
+    max-height: 50%;
 }
 
 
