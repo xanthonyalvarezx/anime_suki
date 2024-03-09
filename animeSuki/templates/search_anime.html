@@ -1,0 +1,71 @@
+{% include 'partials/base.html' %} {% load static %}
+<link rel="stylesheet" href="{% static 'css/search.css' %}" />
+<title>
+  {% block title %}
+    アニメ好き Search Manga
+  {% endblock %}
+</title>
+{% block content %}
+  <div id="manga-info-wrapper">
+    <div>
+      <form method="POST" enctype="multipart/form-data">
+        <div id="search-input-div">
+          {% csrf_token %} {{ form.as_p }}
+        </div>
+      </form>
+      {% if response %}
+        <div class="arrow-div" onclick="history.back()">
+          <img id="back-arrow" src="{% static 'images/back_arrow.png' %}" />
+          <span>BACK</span>
+        </div>
+        <div id="inner-wrapper">
+          {% if response.banner_div == null %}
+            <div class="banner-image-div">
+              <img class="banner-image" src="{{ response.banner_image }}" />
+            </div>
+          {% else %}
+            <div class="no-banner"></div>
+          {% endif %}
+          <div>
+            {% if response.name_english != null %}
+              <h4 class="text-center fw-bold">{{ response.name_english }}</h4>
+            {% else %}
+              <h4 class="text-center fw-bold">{{ response.name_romaji }}</h4>
+            {% endif %}
+          </div>
+          <div class="d-flex justify-content-even gap-3 p-3">
+            <div>
+              <img src="{{ response.cover_image }}" />
+            </div>
+            <div id="info-div">
+              <span class="fw-bold">Started :</span>
+              <span>{{ response.starting_time }}</span><br />
+              <span class="fw-bold">Ended :</span>
+              <span>{{ response.ending_time }}</span><br />
+              <span class="fw-bold">Airing Status:</span>
+              <span>{{ response.airing_status }}</span><br />
+              <span class="fw-bold">Genre :</span>
+              <ul class="genre-list">
+                {% for genre in response.genres %}
+                  <li class="fw-medium">{{ genre }}</li>
+                {% endfor %}
+              </ul>
+              {% if response.average_score is not null %}
+                <span class="fw-bold">Avg rating:</span><span>{{ response.average_score }}</span>
+              {% endif %}
+              {% if response.airing_status != FINISHED %}
+                {% if response.next_airing_ep != None %}
+                  <span class="fw-bold">Next episode airing date:</span>
+                  <span>{{ response.next_airing_ep.airingAt }}</span>
+                {% endif %}
+              {% endif %}
+            </div>
+            <div>
+              <span class="description">{{ response.desc }}</span>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

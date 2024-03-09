@@ -1,98 +1,101 @@
-#manga-info-wrapper{
+#manga-info-wrapper {
     width: 100vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
 }
 
-#inner-wrapper{
-    display:flex;
+#inner-wrapper {
+    display: flex;
     flex-direction: column;
     margin-left: 3rem;
-    border:1rem double #000000;
+    border: 1rem double #000000;
     background-color: color-mix(in srgb, #d3aca6 40%, transparent 60%);
     width: 85vw;
     max-width: 85vw;
     height: 90vh;
     max-height: 90vh;
 }
-#search-input-div{
+#search-input-div {
     display: flex;
     justify-content: center;
     gap: 2rem;
     margin-top: 3rem;
 }
-#search-input-div #id_searchText{
+#search-input-div #id_searchText {
     margin-top: 1.5rem;
     width: 25rem;
 }
 
-#details-div{
+#details-div {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     font-weight: 600;
-    margin-top: 1rem ;
-    gap : 2rem;
+    margin-top: 1rem;
+    gap: 2rem;
 }
-#row{
+#row {
     margin-top: -1rem;
     border: 1px solid blue;
 }
 
-.image-wrapper{
+.image-wrapper {
     border: 1px solid green;
 }
 .description {
     max-width: 15rem;
-
 }
-.banner{
-    border: 1px solid red;
+.banner-image {
+    width: 100%;
     max-width: 100%;
-    
+}
+#info-div {
+    width: 150rem;
+    display: flex;
+    flex-direction: column;
+    padding: ;
+}
+span,
+li,
+ul {
+    width: fit-content;
 }
 
-.errorlist{
+.errorlist {
     display: none;
 }
-#back-arrow{
+#back-arrow {
     width: 2rem;
-    
 }
 
-.arrow-div{
+.arrow-div {
     display: flex;
-    gap:1;
+    gap: 1;
     width: fit-content;
-    margin: -5rem 0 0 .5rem;
-    
+    margin: -5rem 0 0 0.5rem;
 }
-.arrow-div:hover{
+.arrow-div:hover {
     cursor: pointer;
 }
 
-.banner-image{
+.banner-image {
     height: 100%;
 }
 
-.banner-image-div{
-    max-height: 50%;
+.banner-image-div {
+    height: 23rem;
+    max-height: 23rem;
 }
 
-.description{
+.description {
     font-weight: 600;
 }
 
-.genre-list{
+.genre-list {
     list-style-type: none;
 }
-.no-banner{
+.no-banner {
     background-color: #000000;
-    height: 50%;
-    max-height: 50%;
 }
-
-

@@ -52,3 +52,10 @@ class searchMangaForm(forms.Form):
       widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': 'Search Manga'}),
       label=''
       )
+class searchAnimeForm(forms.Form):
+  
+    searchText = forms.CharField(
+      max_length=300,
+      widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': 'Search Anime'}),
+      label=''
+      )
