@@ -15,8 +15,37 @@ def landing(request):
     
     :return: void
     """
-
-    return render(request, 'landing.html'  )
+    anime_url = "https://anime-db.p.rapidapi.com/anime"
+    manga_url = "https://myanimelist.p.rapidapi.com/v2/manga/search"
+    anime_list = ["Dandadan", "Kaijuu 8-gou", "Unnamed Memory"]
+    manga_list = ["Sayonara Eri", "Gachiakuta","PPPPPP"]
+    anime_data_list = []
+    manga_data_list = []
+    for name in anime_list:
+        querystring = {"page":"1","size":"10","search":name ,"sortOrder":"asc"}
+        headers = {
+                    "X-RapidAPI-Key": "40711ea0bcmshed7e321601919acp18162ajsneeda5cdb8609",
+                    "X-RapidAPI-Host": "anime-db.p.rapidapi.com"
+                    }
+        res = requests.get(anime_url, headers=headers, params=querystring)
+        anime_data = res.json()['data']
+        for item in anime_data:
+            if item['title'] == name:
+                anime_data_list.append(item)
+                
+    for name in manga_list:
+        print(name)
+        querystring = {"q":name ,"n":"50","score":"0"}
+        headers = {
+                "X-RapidAPI-Key": "40711ea0bcmshed7e321601919acp18162ajsneeda5cdb8609",
+                "X-RapidAPI-Host": "myanimelist.p.rapidapi.com"
+                }
+        res = requests.get(manga_url, headers=headers, params=querystring)
+        manga_data = res.json()
+        for item in manga_data:
+            if item['title'] == name:
+                manga_data_list.append(item)
+    return render(request, 'landing.html', {'anime': anime_data_list, 'manga': manga_data_list})
 
 def anime(request):
     """
@@ -84,15 +113,16 @@ def searchAnime(request):
             if form.is_valid():
                 searchText = form.cleaned_data['searchText']
                 print(searchText)
-                res = anilist.get_anime(searchText)  
-                res['desc'] = res['desc'].replace("<br>", "")
-                res['desc'] = res['desc'].replace("<i>", "")
-                res['desc'] = res['desc'].replace("</i>", "")
-                if res['next_airing_ep'] :
-                     print("A", res['next_airing_ep']['airingAt'])
-                     res['next_airing_ep']['airingAt'] = datetime.fromtimestamp(res['next_airing_ep']['airingAt'])
-                print(res)
-                return render(request, 'search_anime.html', {'response': res})
+                url = "https://anime-db.p.rapidapi.com/anime"
+                querystring = {"page":"1","size":"10","search":searchText,"sortOrder":"asc"}
+                headers = {
+                    "X-RapidAPI-Key": "40711ea0bcmshed7e321601919acp18162ajsneeda5cdb8609",
+                    "X-RapidAPI-Host": "anime-db.p.rapidapi.com"
+                }
+                res = requests.get(url, headers=headers, params=querystring)
+                data = res.json()
+                # print(res)
+                return render(request, 'search_anime.html', {'response': data['data']})
             else:  
                     return HttpResponse("Error retrieving data") 
         return render(request, 'search_manga.html', {'form': form})
