@@ -50,6 +50,9 @@ body{
     cursor: pointer;
 
 }
+.errorlist{
+    display: none;
+}
 
 #back-button-wrapper span{
     color: #ffffff;
