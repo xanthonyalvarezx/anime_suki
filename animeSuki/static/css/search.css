@@ -1,15 +1,18 @@
-body{
+body {
     display: flex;
 }
 
-#manga-info-wrapper, #anime-info-wrapper {
+#manga-info-wrapper,
+#anime-info-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100vw;
 }
-
+.errorlist {
+    display: none;
+}
 
 #search-input-div {
     display: flex;
@@ -22,46 +25,54 @@ body{
     width: 25rem;
 }
 
-#image-row{
+#image-row {
     display: flex;
     flex-wrap: wrap;
     gap: 3rem;
     padding: 3rem;
 }
 
-.title{
+.image-cont {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 14rem;
+}
+
+.more-info-link {
+    font-size: 1.3rem;
+}
+
+.title {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: color-mix(in srgb, #ffffff 40%, transparent 60%);
+    background-color: color-mix(in srgb, #d3aca6 40%, transparent 60%);
     height: 5.5rem;
-    width: 12rem;
-    padding:1rem;
+    padding: 1rem;
     border-radius: 5%;
+    font-weight: 600;
+    font-size: 1.5rem;
 }
-#back-button-wrapper{
+#back-button-wrapper {
     width: 100vw;
     display: flex;
-    justify-content: flex-start; 
-    margin-left: 3rem;
-    
+    justify-content: flex-start;
+    margin: 2rem 0 0 3rem;
 }
-#back-button-wrapper:hover{
+#back-button-wrapper:hover {
     cursor: pointer;
-
 }
 .errorlist{
     display: none;
 }
 
-#back-button-wrapper span{
+#back-button-wrapper span {
     color: #ffffff;
-    font-weight:600;
+    font-weight: 600;
     mix-blend-mode: difference;
 }
-#back-button-wrapper img{
+#back-button-wrapper img {
     mix-blend-mode: difference;
 }
-
-
-

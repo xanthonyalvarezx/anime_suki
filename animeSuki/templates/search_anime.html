@@ -5,27 +5,29 @@
     アニメ好き Search Anime
   {% endblock %}
 </title>
-  {% block content %}
-    <div id="anime-info-wrapper" onclick="history.back()">
-      <div id="back-button-wrapper">
-          <img src="{% static '/images/back_arrow.png'%}" width="30rem"/>
-          <span>BACK</span>
-     </div>
-        <form method="POST" enctype="multipart/form-data">
-          <div id="search-input-div">
-            {% csrf_token %} {{ form.as_p }}
-          </div>
-        </form>
-        {% if response %}
-        <div id="image-row">
-          {% for anime in response %}
-            <div class="image-cont">
-                <div class="title">{{anime.title}}</div><br/>
-                <img src="{{anime.image}}" />
-            </div>
-          {% endfor %}
-        </div>
-        {% endif %}
+{% block content %}
+  <div id="anime-info-wrapper" onclick="history.back()">
+    <div id="back-button-wrapper">
+      <img src="{% static '/images/back_arrow.png' %}" width="30rem" />
+      <span>BACK</span>
     </div>
-  {% endblock %}
-  
+    <form method="POST" enctype="multipart/form-data">
+      <div id="search-input-div">
+        {% csrf_token %} {{ form.as_p }}
+      </div>
+    </form>
+    {% if response %}
+      <div id="image-row">
+        {% for anime in response %}
+          <div class="image-cont">
+            <div class="title">{{ anime.title }}</div><br />
+            <img src="{{ anime.image }}" />
+            <div>
+              <a href="" class="text-dark fw-2 more-info-link">More Info...</a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

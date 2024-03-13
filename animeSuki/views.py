@@ -6,6 +6,7 @@ from django.contrib import messages
 import json
 from datetime import datetime
 from AnilistPython import Anilist
+import datetime
 anilist = Anilist()
 
 
@@ -17,10 +18,19 @@ def landing(request):
     """
     anime_url = "https://anime-db.p.rapidapi.com/anime"
     manga_url = "https://myanimelist.p.rapidapi.com/v2/manga/search"
-    anime_list = ["Dandadan", "Kaijuu 8-gou", "Unnamed Memory"]
+    anime_list = ["Unnamed Memory", "Kaijuu 8-gou", "Dandadan"]
+    anime_date_list = ["2024 4 9", "April 13, 2024", "October 2024"]
     manga_list = ["Sayonara Eri", "Gachiakuta","PPPPPP"]
     anime_data_list = []
     manga_data_list = []
+    for date in anime_date_list:
+        present = datetime.datetime.now()
+        future = datetime.datetime(2019, 3, 31, 8, 0, 0)
+        difference = future - present
+        anime_date_list[date] = difference
+        print(anime_date_list)
+
+
     for name in anime_list:
         querystring = {"page":"1","size":"10","search":name ,"sortOrder":"asc"}
         headers = {
@@ -33,19 +43,19 @@ def landing(request):
             if item['title'] == name:
                 anime_data_list.append(item)
                 
-    for name in manga_list:
-        print(name)
-        querystring = {"q":name ,"n":"50","score":"0"}
-        headers = {
-                "X-RapidAPI-Key": "40711ea0bcmshed7e321601919acp18162ajsneeda5cdb8609",
-                "X-RapidAPI-Host": "myanimelist.p.rapidapi.com"
-                }
-        res = requests.get(manga_url, headers=headers, params=querystring)
-        manga_data = res.json()
-        for item in manga_data:
-            if item['title'] == name:
-                manga_data_list.append(item)
-    return render(request, 'landing.html', {'anime': anime_data_list, 'manga': manga_data_list})
+    # for name in manga_list:
+    #     print(name)
+    #     querystring = {"q":name ,"n":"50","score":"0"}
+    #     headers = {
+    #             "X-RapidAPI-Key": "40711ea0bcmshed7e321601919acp18162ajsneeda5cdb8609",
+    #             "X-RapidAPI-Host": "myanimelist.p.rapidapi.com"
+    #             }
+    #     res = requests.get(manga_url, headers=headers, params=querystring)
+    #     manga_data = res.json()
+    #     for item in manga_data:
+    #         if item['title'] == name:
+    #             manga_data_list.append(item)
+    return render(request, 'landing.html', {'anime': anime_data_list, "anime_dates": anime_date_list })#, 'manga': manga_data_list})
 
 def anime(request):
     """
