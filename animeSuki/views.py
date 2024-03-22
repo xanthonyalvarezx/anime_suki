@@ -155,6 +155,16 @@ def searchManga(request):
         return render(request, 'search_manga.html', {'form': form})
     
 def get_anime(request, id):
-    print("ID:", id)
-    return render(request, 'search_manga.html')
+    url = "https://anime-db.p.rapidapi.com/anime/by-id/" + id
+
+    headers = {
+	    "X-RapidAPI-Key": "40711ea0bcmshed7e321601919acp18162ajsneeda5cdb8609",
+	    "X-RapidAPI-Host": "anime-db.p.rapidapi.com"
+    }
+
+    response = requests.get(url, headers=headers)
+    data = response.json()
+
+    print(response.json())
+    return render(request, 'details.html', {'details': data, "type": "anime"} )
     

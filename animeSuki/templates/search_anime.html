@@ -6,8 +6,8 @@
   {% endblock %}
 </title>
 {% block content %}
-  <div id="anime-info-wrapper" onclick="history.back()">
-    <div id="back-button-wrapper">
+  <div id="anime-info-wrapper">
+    <div id="back-button-wrapper" onclick="history.back()">
       <img src="{% static '/images/back_arrow.png' %}" width="30rem" />
       <span>BACK</span>
     </div>
@@ -23,7 +23,7 @@
             <div class="title">{{ anime.title }}</div><br />
             <img src="{{ anime.image }}" />
             <div>
-              <a href="{% url 'get_anime_by_id' id=anime.id %}" class="text-dark fw-2 more-info-link">More Info...</a>
+              <a href="{% url 'get_anime_by_id' anime.id %}" class="text-dark fw-2 more-info-link">More Info...</a>
             </div>
           </div>
         {% endfor %}
