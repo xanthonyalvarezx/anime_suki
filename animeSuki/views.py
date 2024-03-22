@@ -122,7 +122,6 @@ def searchAnime(request):
         if request.method == "POST":
             if form.is_valid():
                 searchText = form.cleaned_data['searchText']
-                print(searchText)
                 url = "https://anime-db.p.rapidapi.com/anime"
                 querystring = {"page":"1","size":"10","search":searchText,"sortOrder":"asc"}
                 headers = {
@@ -131,7 +130,8 @@ def searchAnime(request):
                 }
                 res = requests.get(url, headers=headers, params=querystring)
                 data = res.json()
-                # print(res)
+                for item in data['data']:
+                    [item][0]['id'] = item['_id']
                 return render(request, 'search_anime.html', {'response': data['data']})
             else:  
                     return HttpResponse("Error retrieving data") 
@@ -153,3 +153,8 @@ def searchManga(request):
             else:  
                     return HttpResponse("Error retrieving data") 
         return render(request, 'search_manga.html', {'form': form})
+    
+def get_anime(request, id):
+    print("ID:", id)
+    return render(request, 'search_manga.html')
+    

@@ -23,7 +23,7 @@
             <div class="title">{{ anime.title }}</div><br />
             <img src="{{ anime.image }}" />
             <div>
-              <a href="" class="text-dark fw-2 more-info-link">More Info...</a>
+              <a href="{% url 'get_anime_by_id' id=anime.id %}" class="text-dark fw-2 more-info-link">More Info...</a>
             </div>
           </div>
         {% endfor %}
