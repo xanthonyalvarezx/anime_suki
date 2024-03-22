@@ -1,0 +1,24 @@
+{% include 'partials/base.html' %} {% load static %}
+<link rel="stylesheet" href="{% static 'css/details.css' %}" />
+{% if type == 'anime' %}
+  <div id="outer-wrapper" class="d-flex justfy-content-center">
+    <div id="details-wrapper" class="d-flex justify-content-center">
+      <div class="d-flex justify-content-center gap-5">
+        <div>
+          <div class="text-center">
+            <h3 class="fw-bold">{{ details.title }}</h3>
+          </div>
+          <img src="{{ details.image }}" width="300px" />
+        </div>
+        <div id="synopsis" class="w-50">
+          <p>{{ details.synopsis }}</p>
+        </div>
+        <div>
+          <span class="fw-bold">Status:</span><span>{{ details.status }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+{% else %}
+  Manga
+{% endif %}
