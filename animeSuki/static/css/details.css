@@ -7,16 +7,31 @@ body {
     justify-content: center;
     align-items: center;
     min-width: 100%;
-    border: 1px solid red;
     padding-right: 10rem;
 }
 
 #details-wrapper {
-    background-color: color-mix(in srgb, #d3aca6 50%, transparent 50%);
-    padding: 5rem 0 5rem 0;
-    font-size: 1.2rem;
+    border: 1rem inset rgb(99, 54, 54);
+    background-color: color-mix(in srgb, #ba9089 60%, transparent 40%);
+    margin: 5rem;
+    font-size: 1rem;
+    max-width: 90%;
+}
+
+#details-right{
+    max-height: 20rem;
+}
+.detail-item{
+    max-width: fit-content;
+}
+#cover-image{
+    max-height: 425px;
 }
 
 #synopsis {
     font-weight: 600;
+}
+
+#genre-list{
+    list-style: none;
 }

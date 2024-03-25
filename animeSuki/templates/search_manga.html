@@ -1,57 +1,58 @@
 {% include "partials/base.html" %} {% load static %}
-<link rel="stylesheet" href="{% static 'css/search.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/search.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/details.css' %}" />
 <title>{% block title %}アニメ好き Search Manga{% endblock %}</title>
 {% block content %}
 <div id="manga-info-wrapper">
     <div>
         <form method="POST" enctype="multipart/form-data">
-        <div id="search-input-div">{% csrf_token %} {{ form.as_p}}</div>
+            <div id="search-input-div">{% csrf_token %} {{ form.as_p}}</div>
         </form>
-        {% if response %}
-        <div class="arrow-div" onclick="history.back()">
-            <img id="back-arrow" src="{% static 'images/back_arrow.png' %}" />
-            <span>BACK</span>
-        </div>
-        <div id="inner-wrapper">
-            {% if response.banner_div is not none %}
-            <div class="banner-image-div">
-                <img class="banner-image" src="{{response.banner_image}}" width="100%"/>
-            </div>
-            {% else %}
-            <div class="no-banner">
-            </div>
-            {%endif%}
-            <div>
-                <h4 class="text-center fw-bold">
-                    {{response.name_english}}
-                </h4>
-            </div>
-            <div class="d-flex justify-content-even gap-3 p-3">
-                <div>
-                    <img src="{{response.cover_image}}"/>
+        {% if details %}
+        <div id="outer-wrapper" class="d-flex justfy-content-center">
+            <div id="details-wrapper" class="d-flex flex-column justify-content-center">
+              <div id="banner-image">
+                <img src="{{details.banner_image}}" width="100%"/>
+              </div>
+                <div class="d-flex flex-column align-items-center">
+                    <div class="text-center">
+                      <h3 class="fw-bold">{{ details.name_english }}</h3>
+                    </div>
+                    <div class="d-flex gap-5 pe-5 mt-3">
+                      <div class="w-50">
+                        <img id="cover-image" src="{{ details.cover_image }}" width="300px" />
+                      </div>
+                      <div id="details-right" class="d-flex flex-column flex-wrap w-50">
+                        <div class="detail-item"><span class="fw-bold">Format: </span><span>{{ details.release_format }}</span></div>
+                        <div class="detail-item"><span class="fw-bold">Status: </span><span>{{ details.release_status }}</span></div>
+                        <div class="detail-item">
+                        <span class="fw-bold">Genre: </span>
+                          <ul id="genre-list">
+                            {% for genre in details.genres %}
+                              <li>{{ genre }} </li>
+                            {% endfor %}
+                          </ul>
+                        </div>
+                        <div class="detail-item"><span class="fw-bold">Started: </span><span>{{ details.starting_time }}</span></div>
+                        <div class="detail-item"><span class="fw-bold">Ended: </span><span>{{ details.ending_time }}</span></div>
+                        {% if details.chapters%}
+                            <div class="detail-item"><span class="fw-bold">Chapters: </span><span>{{ details.chapters }}</span></div>
+                        {% endif %}
+                        {% if details.volumes%}
+                            <div class="detail-item"><span class="fw-bold">Volumes: </span><span>{{ details.volumes }}</span></div>
+                        {% endif %}
+                        {% if details.next_airing_ep is not None %}
+                          <div class="details-item"><span class="fw-bold">Next Episode: </span><span>{{ details.next_airing_ep.airingAt|date }}</span></div>
+                        {% endif %}
+                        <div class="detail-item"><span class="fw-bold">Average Score: </span><span>{{details.average_score}}</span></div>
+                      </div>
+                    </div>
                 </div>
-                <div>
-                    {%if response.chapters %}
-                        <span class="fw-bold">Chapters: </span><span>{{response.chapters}}</span><br/>
-                    {% endif%}
-                    {%if response.volumes %}
-                        <span class="fw-bold">Volumes: </span><span>{{response.volumes}}</span><br/>
-                    {% endif%}
-                    <span class="fw-bold">Genre :</span>
-                    <ul class="genre-list">
-                        {% for genre in response.genres%}
-                            <li class="fw-medium">{{genre}}</li>
-                        {% endfor%}
-                    </ul>
-                    {% if response.average_score is not none%}
-                        <span class="fw-bold">Avg rating: </span><span>{{response.average_score}}</span>
-                    {% endif%}
-                </div>
-                <div>
-                    <span class="description">{{response.desc}}</span>
+                <div id="synopsis" class="p-5">
+                  <p>{{ details.desc }}</p>
                 </div>
             </div>
-        </div>
+          </div>
         {% endif %}
     </div>
 </div>

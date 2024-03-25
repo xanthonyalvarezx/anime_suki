@@ -7,12 +7,14 @@ body {
     height: 100vh;
 }
 
-.title {
-    background-color: color-mix(in srgb, #d3aca6 50%, transparent 50%);
-    font-weight: 600;
-    font-size: 1.3rem;
-    width: 100%;
-    text-align: center;
-    color: #000000;
-    padding: 1rem;
+.image-div{
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+    background-color: color-mix(in srgb, #d3aca6 70%, transparent 30%);
+}   
+
+a{
+    text-decoration: none;
 }
