@@ -1,22 +1,43 @@
 {% include 'partials/base.html' %} {% load static %}
-<link rel="stylesheet" href="{% static 'css/details.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/details.css' %}" />
 {% if type == 'anime' %}
   <div id="outer-wrapper" class="d-flex justfy-content-center">
-    <div id="details-wrapper" class="d-flex justify-content-center">
-      <div class="d-flex justify-content-center gap-5">
-        <div>
-          <div class="text-center">
-            <h3 class="fw-bold">{{ details.title }}</h3>
-          </div>
-          <img src="{{ details.image }}" width="300px" />
-        </div>
-        <div id="synopsis" class="w-50">
-          <p>{{ details.synopsis }}</p>
-        </div>
-        <div>
-          <span class="fw-bold">Status:</span><span>{{ details.status }}</span>
-        </div>
+    <div id="details-wrapper" class="d-flex flex-column justify-content-center">
+      <div id="banner-image">
+        <img src="{{details.banner_image}}" width="100%"/>
       </div>
+        <div class="d-flex flex-column align-items-center">
+            <div class="text-center">
+              <h3 class="fw-bold">{{ details.name_english }}</h3>
+            </div>
+            <div class="d-flex gap-5 pe-5 mt-3">
+              <div class="w-50">
+                <img id="cover-image" src="{{ details.cover_image }}" width="300px" />
+              </div>
+              <div id="details-right" class="d-flex flex-column flex-wrap w-50">
+                <div class="detail-item"><span class="fw-bold">Format: </span><span>{{ details.airing_format }}</span></div>
+                <div class="detail-item"><span class="fw-bold">Status: </span><span>{{ details.airing_status }}</span></div>
+                <div class="detail-item">
+                <span class="fw-bold">Genre: </span>
+                  <ul id="genre-list">
+                    {% for genre in details.genres %}
+                      <li>{{ genre }} </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+                <div class="detail-item"><span class="fw-bold">Started: </span><span>{{ details.starting_time }}</span></div>
+                <div class="detail-item"><span class="fw-bold">Ended: </span><span>{{ details.ending_time }}</span></div>
+                <div class="detail-item"><span class="fw-bold">Episodes: </span><span>{{ details.airing_episodes }}</span></div>
+                {% if details.next_airing_ep is not None %}
+                  <div class="details-item"><span class="fw-bold">Next Episode: </span><span>{{ details.next_airing_ep.airingAt|date }}</span></div>
+                {% endif %}
+                <div class="detail-item"><span class="fw-bold">Average Score: </span><span>{{details.average_score}}</span></div>
+              </div>
+            </div>
+        </div>
+        <div id="synopsis" class="p-5">
+          <p>{{ details.desc }}</p>
+        </div>
     </div>
   </div>
 {% else %}

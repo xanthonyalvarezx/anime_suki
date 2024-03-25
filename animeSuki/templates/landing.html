@@ -1,6 +1,6 @@
 {% include 'partials/base.html' %}
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/landing.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/landing.css' %}" />
 <title>
   {% block title %}
     アニメ好き Anime Suki
@@ -10,28 +10,27 @@
   <h2 class="text-center">Anime to look out for!</h2><br />
   <div class="d-flex gap-5">
     {% for data in anime %}
-      <div class="d-flex flex-column justify-content-center align-items-center">
-        <span class="title">{{ data.title }}</span><br />
-        <div>
-          <img src="{{ data.image }}" />
+    <div class="row d-flex">
+        <div class="image-div"> 
+          <h5>{{data.name_english}}</h5>
+          <img src="{{data.cover_image}}" width="200px"/>
+         <div>
+            <a href="{% url 'get_anime' data.name_english %}" class="text-dark fw-2 more-info-link">More Info...</a></div>
         </div>
-        <div>
-          <a href="" class="text-dark">More Info</a>
-        </div>
-      </div>
+    </div>
     {% endfor %}
   </div>
   <h2 class="text-center mt-4">manga to look out for!</h2><br />
   <div class="d-flex gap-5">
     {% for data in manga %}
-      <div class="d-flex flex-column justify-content-center align-items-center">
-        <a href="" class="d-flex flex-column justify-content-center align-items-center">
-          <span class="title text-center">{{ data.title }}</span><br />
-          <div>
-            <img src="{{ data.picture_url }}" />
-          </div>
-        </a>
-      </div>
+    <div class="row">
+        <div class="image-div"> 
+          <h5>{{data.name_english}}</h5>
+          <img src="{{data.cover_image}}" width="200px"/>
+         <div>
+            <a href="{% url 'search_manga' data.name_english %}" class="text-dark fw-2 more-info-link">More Info...</a></div>
+        </div>
+    </div>
     {% endfor %}
   </div>
   <div>top manga</div>

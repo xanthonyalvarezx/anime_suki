@@ -1,5 +1,6 @@
 from django.urls import path
-
+from django.conf.urls.static import static
+from django.conf import settings
 from . import views
 
 urlpatterns = [
@@ -8,8 +9,13 @@ urlpatterns = [
     path("manga", views.manga, name="manga"),
     path("news_letter", views.newsLetter, name="news_letter"),
     path("add_anime", views.addAnime, name="search_anime"),
-    path("get_anime/<str:id>/", views.get_anime, name="get_anime_by_id"),
+    path("get_anime/<str:title>/", views.get_anime, name="get_anime"),
     path("search_anime", views.searchAnime, name="search_anime"),
     path("add_manga", views.addManga, name="search_manga"),
     path("search_manga", views.searchManga, name="search_manga"),
-]
+    path("search_manga/<str:title>", views.searchManga, name="search_manga"),
+] 
+
+
+
+

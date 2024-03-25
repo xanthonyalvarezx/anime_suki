@@ -4,10 +4,13 @@ import requests
 from .forms import addAnimeForm, addMangaForm, searchMangaForm, searchAnimeForm
 from django.contrib import messages
 import json
+import time
 from datetime import datetime
 from AnilistPython import Anilist
 import datetime
 anilist = Anilist()
+anime_data_list = []
+manga_data_list = []
 
 
 def landing(request):
@@ -19,43 +22,18 @@ def landing(request):
     anime_url = "https://anime-db.p.rapidapi.com/anime"
     manga_url = "https://myanimelist.p.rapidapi.com/v2/manga/search"
     anime_list = ["Unnamed Memory", "Kaijuu 8-gou", "Dandadan"]
-    anime_date_list = ["2024 4 9", "April 13, 2024", "October 2024"]
     manga_list = ["Sayonara Eri", "Gachiakuta","PPPPPP"]
-    anime_data_list = []
-    manga_data_list = []
-    for date in anime_date_list:
-        present = datetime.datetime.now()
-        future = datetime.datetime(2019, 3, 31, 8, 0, 0)
-        difference = future - present
-        anime_date_list[date] = difference
-        print(anime_date_list)
-
-
-    for name in anime_list:
-        querystring = {"page":"1","size":"10","search":name ,"sortOrder":"asc"}
-        headers = {
-                    "X-RapidAPI-Key": "40711ea0bcmshed7e321601919acp18162ajsneeda5cdb8609",
-                    "X-RapidAPI-Host": "anime-db.p.rapidapi.com"
-                    }
-        res = requests.get(anime_url, headers=headers, params=querystring)
-        anime_data = res.json()['data']
-        for item in anime_data:
-            if item['title'] == name:
-                anime_data_list.append(item)
-                
-    # for name in manga_list:
-    #     print(name)
-    #     querystring = {"q":name ,"n":"50","score":"0"}
-    #     headers = {
-    #             "X-RapidAPI-Key": "40711ea0bcmshed7e321601919acp18162ajsneeda5cdb8609",
-    #             "X-RapidAPI-Host": "myanimelist.p.rapidapi.com"
-    #             }
-    #     res = requests.get(manga_url, headers=headers, params=querystring)
-    #     manga_data = res.json()
-    #     for item in manga_data:
-    #         if item['title'] == name:
-    #             manga_data_list.append(item)
-    return render(request, 'landing.html', {'anime': anime_data_list, "anime_dates": anime_date_list })#, 'manga': manga_data_list})
+        
+    print(len(anime_data_list))
+    if len(anime_data_list) < 3:
+        print("AGAIN")
+        for name in anime_list:
+            anime_data_list.append(anilist.get_anime(name))
+    time.sleep(.5)
+    if len(manga_data_list) < 3:
+        for name in manga_list:
+            manga_data_list.append(anilist.get_manga(name));
+    return render(request, 'landing.html', {'anime': anime_data_list, 'manga': manga_data_list})
 
 def anime(request):
     """
@@ -137,34 +115,37 @@ def searchAnime(request):
                     return HttpResponse("Error retrieving data") 
         return render(request, 'search_manga.html', {'form': form})
 
-def searchManga(request):
+def searchManga(request, title):
+    anilist = Anilist()
+    print(title)
+    if title == "":
         form = searchMangaForm(request.POST)
         if request.method == "POST":
             if form.is_valid():
-                searchBy = form.cleaned_data['searchBy']
-                searchText = form.cleaned_data['searchText']
-                print(searchBy, searchText)
-                res = anilist.get_manga(searchText)  
-                res['desc'] = res['desc'].replace("<br>", "")
-                res['desc'] = res['desc'].replace("<i>", "")
-                res['desc'] = res['desc'].replace("</i>", "")
-                print(res)
-                return render(request, 'search_manga.html', {'response': res})
-            else:  
-                    return HttpResponse("Error retrieving data") 
-        return render(request, 'search_manga.html', {'form': form})
+                    searchText = form.cleaned_data['searchText']
+    else:
+        searchText = title
+            
+    response = anilist.get_manga(searchText)
+    response['desc'] = response['desc'].replace("<br>", " ")
+    response['desc'] = response['desc'].replace("<i>", " ")
+    response['desc'] = response['desc'].replace("</i>", " ")
+    print(response)
+    return render(request, 'search_manga.html', { 'details': response, 'type': manga})
     
-def get_anime(request, id):
-    url = "https://anime-db.p.rapidapi.com/anime/by-id/" + id
-
-    headers = {
-	    "X-RapidAPI-Key": "40711ea0bcmshed7e321601919acp18162ajsneeda5cdb8609",
-	    "X-RapidAPI-Host": "anime-db.p.rapidapi.com"
-    }
-
-    response = requests.get(url, headers=headers)
-    data = response.json()
-
-    print(response.json())
-    return render(request, 'details.html', {'details': data, "type": "anime"} )
+def get_anime(request, title):
+    
+    anilist = Anilist()
+    try:
+        response = anilist.get_anime(title)
+        print(response)
+        response['desc'] = response['desc'].replace("<br>", " ")
+        response['desc'] = response['desc'].replace("<i>", " ")
+        response['desc'] = response['desc'].replace("</i>", " ")
+        if response['next_airing_ep']:
+            response['next_airing_ep']['airingAt'] =  datetime.datetime.fromtimestamp( response['next_airing_ep']['airingAt'])
+    except Exception as e:
+        print(e)
+    return render(request, 'details.html', {'details': response, "type": "anime"} )
+        
     
