@@ -24,15 +24,13 @@ def landing(request):
     anime_list = ["Unnamed Memory", "Kaijuu 8-gou", "Dandadan"]
     manga_list = ["Sayonara Eri", "Gachiakuta","PPPPPP"]
         
-    print(len(anime_data_list))
     if len(anime_data_list) < 3:
-        print("AGAIN")
         for name in anime_list:
             anime_data_list.append(anilist.get_anime(name))
-    time.sleep(.5)
     if len(manga_data_list) < 3:
         for name in manga_list:
             manga_data_list.append(anilist.get_manga(name));
+            set_release_date(anime_data_list, 0)
     return render(request, 'landing.html', {'anime': anime_data_list, 'manga': manga_data_list})
 
 def anime(request):
@@ -115,37 +113,85 @@ def searchAnime(request):
                     return HttpResponse("Error retrieving data") 
         return render(request, 'search_manga.html', {'form': form})
 
-def searchManga(request, title):
+def searchManga(request):
     anilist = Anilist()
-    print(title)
-    if title == "":
-        form = searchMangaForm(request.POST)
-        if request.method == "POST":
-            if form.is_valid():
-                    searchText = form.cleaned_data['searchText']
-    else:
-        searchText = title
-            
-    response = anilist.get_manga(searchText)
-    response['desc'] = response['desc'].replace("<br>", " ")
-    response['desc'] = response['desc'].replace("<i>", " ")
-    response['desc'] = response['desc'].replace("</i>", " ")
-    print(response)
-    return render(request, 'search_manga.html', { 'details': response, 'type': manga})
+    form = searchMangaForm(request.POST)
+    if request.method == "POST":
+        if form.is_valid():
+            searchText = form.cleaned_data['searchText']
+        response = anilist.get_manga(searchText)
+        response['desc'] = response['desc'].replace("<br>", " ")
+        response['desc'] = response['desc'].replace("<i>", " ")
+        response['desc'] = response['desc'].replace("</i>", " ")
+        response['starting_time'] = countdown(response['starting_time'])
+    return render(request, 'search_manga.html', {'form': form})
     
 def get_anime(request, title):
     
     anilist = Anilist()
     try:
         response = anilist.get_anime(title)
-        print(response)
         response['desc'] = response['desc'].replace("<br>", " ")
         response['desc'] = response['desc'].replace("<i>", " ")
         response['desc'] = response['desc'].replace("</i>", " ")
+        response['starting_time'] = countdown(response['starting_time'])
         if response['next_airing_ep']:
             response['next_airing_ep']['airingAt'] =  datetime.datetime.fromtimestamp( response['next_airing_ep']['airingAt'])
     except Exception as e:
         print(e)
     return render(request, 'details.html', {'details': response, "type": "anime"} )
         
+def get_manga(request, title):
+    
+    anilist = Anilist()
+    try:
+        response = anilist.get_manga(title)
+        response['desc'] = response['desc'].replace("<br>", " ")
+        response['desc'] = response['desc'].replace("<i>", " ")
+        response['desc'] = response['desc'].replace("</i>", " ")
+        response['starting_time'] = countdown(response['starting_time'])
+        if response['next_airing_ep']:
+            response['next_airing_ep']['airingAt'] =  datetime.datetime.fromtimestamp( response['next_airing_ep']['airingAt'])
+    except Exception as e:
+        print(e)
+    return render(request, 'details.html', {'details': response, "type": "manga"} )
+
+def set_release_date(data_list , count):
+    data_list  = data_list
+    count = count
+    for item in data_list:
+        if countdown(item['starting_time']) == "released":
+            item["release_timer"] = f"Released: {item['starting_time']}"
+        else:
+            item["release_timer"] = countdown(item['starting_time'])
+    if count == 1:
+        return
+    else:
+        set_release_date(manga_data_list, 1)
+
+
+
+def countdown(date):
+    release_date = date.split("/")[::-1]
+    year = int(release_date[0])
+    if release_date[1] == "None":
+        day = 1
+    else:
+        day = int(release_date[1])
+    month = int(release_date[2])
+    future_date = datetime.datetime(year, month, day)
+    current_date = datetime.datetime.now()
+    time_difference = future_date - current_date
+    
+    # Ensure the future date hasn't already passed
+    if time_difference.total_seconds() < 0:
+        return "released"
+    
+    days = time_difference.days
+    hours, remainder = divmod(time_difference.seconds, 3600)
+    minutes, seconds = divmod(remainder, 60)
+
+    print(f"Countdown: {days} days, {hours} hours, {minutes} minutes, {seconds}")
+    return f"Releasing in: {days} days, {hours} hours, {minutes} minutes"
+    
     

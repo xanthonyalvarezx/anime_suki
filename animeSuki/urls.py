@@ -13,8 +13,8 @@ urlpatterns = [
     path("search_anime", views.searchAnime, name="search_anime"),
     path("add_manga", views.addManga, name="search_manga"),
     path("search_manga", views.searchManga, name="search_manga"),
-    path("search_manga/<str:title>", views.searchManga, name="search_manga"),
-] 
+    path("get_manga/<str:title>/", views.get_manga, name="get_manga"),
+    ] 
 
 
 
