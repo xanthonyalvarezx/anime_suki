@@ -14,7 +14,10 @@
         <div class="image-div"> 
           <h5>{{data.name_english}}</h5>
           <img src="{{data.cover_image}}" width="200px"/>
-         <div>
+          <div>
+            <span>{{data.release_timer}}</span>
+          </div>
+        <div>
             <a href="{% url 'get_anime' data.name_english %}" class="text-dark fw-2 more-info-link">More Info...</a></div>
         </div>
     </div>
@@ -23,14 +26,17 @@
   <h2 class="text-center mt-4">manga to look out for!</h2><br />
   <div class="d-flex gap-5">
     {% for data in manga %}
-    <div class="row">
-        <div class="image-div"> 
-          <h5>{{data.name_english}}</h5>
-          <img src="{{data.cover_image}}" width="200px"/>
-         <div>
-            <a href="{% url 'search_manga' data.name_english %}" class="text-dark fw-2 more-info-link">More Info...</a></div>
+    <div class="row d-flex">
+      <div class="image-div"> 
+        <h5>{{data.name_english}}</h5>
+        <img src="{{data.cover_image}}" width="200px"/>
+        <div>
+          <span>{{data.release_timer}}</span>
         </div>
-    </div>
+      <div>
+          <a href="{% url 'get_manga' data.name_english %}" class="text-dark fw-2 more-info-link">More Info...</a></div>
+      </div>
+  </div>
     {% endfor %}
   </div>
   <div>top manga</div>
