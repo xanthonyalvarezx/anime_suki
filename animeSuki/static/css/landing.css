@@ -3,18 +3,36 @@ body {
 }
 
 #outer-cont {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
+}
+.image-row {
+    background-color: color-mix(in srgb, #ffffff 50%, transparent 50%);
+    padding: 3rem 0;
 }
 
-.image-div{
+.image-div {
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: color-mix(in srgb, #d3aca6 70%, transparent 30%);
-}   
+}
 
-a{
+.manga-image-div {
+    padding: 3.2rem;
+}
+.anime-image-div {
+    padding: 3rem 0;
+}
+
+a {
     text-decoration: none;
+}
+
+h2 {
+    background-color: color-mix(in srgb, #ffffff 50%, transparent 50%);
+    padding: 0.5rem 1rem;
+    margin: 1rem 0 -0.1rem 0;
+    border-radius: 8px 8px 0 0;
 }

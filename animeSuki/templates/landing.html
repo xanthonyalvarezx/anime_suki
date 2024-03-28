@@ -8,35 +8,37 @@
 </title>
 <div id="outer-cont" class="d-flex flex-column justify-content-center align-items-center">
   <h2 class="text-center">Anime to look out for!</h2><br />
-  <div class="d-flex gap-5">
+  <div class="image-row d-flex justify-content-evenly gap-5 w-100">
     {% for data in anime %}
-    <div class="row d-flex">
-        <div class="image-div"> 
-          <h5>{{data.name_english}}</h5>
-          <img src="{{data.cover_image}}" width="200px"/>
-          <div>
-            <span>{{data.release_timer}}</span>
+      <div class="d-flex">
+        <div class="image-div anime-image-div">
+          <h5>{{ data.name_english }}</h5>
+          <img src="{{ data.cover_image }}" width="200px" />
+          <div class="w-75">
+            <span>{{ data.release_timer }}</span>
           </div>
-        <div>
-            <a href="{% url 'get_anime' data.name_english %}" class="text-dark fw-2 more-info-link">More Info...</a></div>
+          <div>
+            <a href="{% url 'get_anime' data.name_english %}" class="text-dark fw-2 more-info-link">More Info...</a>
+          </div>
         </div>
-    </div>
+      </div>
     {% endfor %}
   </div>
   <h2 class="text-center mt-4">manga to look out for!</h2><br />
-  <div class="d-flex gap-5">
+  <div class="image-row d-flex justify-content-evenly gap-5 w-100">
     {% for data in manga %}
-    <div class="row d-flex">
-      <div class="image-div"> 
-        <h5>{{data.name_english}}</h5>
-        <img src="{{data.cover_image}}" width="200px"/>
-        <div>
-          <span>{{data.release_timer}}</span>
+      <div class="d-flex">
+        <div class="image-div manga-image-div">
+          <h5>{{ data.name_english }}</h5>
+          <img src="{{ data.cover_image }}" width="200px" />
+          <div>
+            <span>{{ data.release_timer }}</span>
+          </div>
+          <div>
+            <a href="{% url 'get_manga' data.name_english %}" class="text-dark fw-2 more-info-link">More Info...</a>
+          </div>
         </div>
-      <div>
-          <a href="{% url 'get_manga' data.name_english %}" class="text-dark fw-2 more-info-link">More Info...</a></div>
       </div>
-  </div>
     {% endfor %}
   </div>
   <div>top manga</div>

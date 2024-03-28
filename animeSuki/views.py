@@ -10,6 +10,7 @@ from AnilistPython import Anilist
 import datetime
 anilist = Anilist()
 anime_data_list = []
+anime_genre_list = []
 manga_data_list = []
 
 
@@ -29,7 +30,7 @@ def landing(request):
             anime_data_list.append(anilist.get_anime(name))
     if len(manga_data_list) < 3:
         for name in manga_list:
-            manga_data_list.append(anilist.get_manga(name));
+            manga_data_list.append(anilist.get_manga(name))
             set_release_date(anime_data_list, 0)
     return render(request, 'landing.html', {'anime': anime_data_list, 'manga': manga_data_list})
 
@@ -124,6 +125,8 @@ def searchManga(request):
         response['desc'] = response['desc'].replace("<i>", " ")
         response['desc'] = response['desc'].replace("</i>", " ")
         response['starting_time'] = countdown(response['starting_time'])
+        
+        return render(request, 'search_manga.html', {"details": response})
     return render(request, 'search_manga.html', {'form': form})
     
 def get_anime(request, title):
@@ -190,8 +193,6 @@ def countdown(date):
     days = time_difference.days
     hours, remainder = divmod(time_difference.seconds, 3600)
     minutes, seconds = divmod(remainder, 60)
-
-    print(f"Countdown: {days} days, {hours} hours, {minutes} minutes, {seconds}")
     return f"Releasing in: {days} days, {hours} hours, {minutes} minutes"
     
     
