@@ -12,10 +12,10 @@
     {% for data in anime %}
       <div class="d-flex">
         <div class="image-div anime-image-div">
-          <h5>{{ data.name_english }}</h5>
+          <h5 class="fw-bold">{{ data.name_english }}</h5>
           <img src="{{ data.cover_image }}" width="200px" />
           <div class="w-75">
-            <span>{{ data.release_timer }}</span>
+            <span class="fw-medium">{{ data.release_timer }}</span>
           </div>
           <div>
             <a href="{% url 'get_anime' data.name_english %}" class="text-dark fw-2 more-info-link">More Info...</a>
@@ -29,10 +29,10 @@
     {% for data in manga %}
       <div class="d-flex">
         <div class="image-div manga-image-div">
-          <h5>{{ data.name_english }}</h5>
+          <h5 class="fw-bold">{{ data.name_english }}</h5>
           <img src="{{ data.cover_image }}" width="200px" />
           <div>
-            <span>{{ data.release_timer }}</span>
+            <span class="fw-medium">{{ data.release_timer }}</span>
           </div>
           <div>
             <a href="{% url 'get_manga' data.name_english %}" class="text-dark fw-2 more-info-link">More Info...</a>

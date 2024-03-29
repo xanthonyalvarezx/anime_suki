@@ -195,4 +195,6 @@ def countdown(date):
     minutes, seconds = divmod(remainder, 60)
     return f"Releasing in: {days} days, {hours} hours, {minutes} minutes"
     
+def handle_404(request):
     
+    return render(request, 'handle.404.html')
