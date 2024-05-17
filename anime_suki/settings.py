@@ -29,9 +29,9 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 ANIME_DB_KEY = str(os.getenv('ANIME_DB_KEY '))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
