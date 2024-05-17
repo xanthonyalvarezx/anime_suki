@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 import requests
 from .forms import addAnimeForm, addMangaForm, searchMangaForm, searchAnimeForm
 from django.contrib import messages
+from django.conf import settings
 import json
 import time
 from datetime import datetime
@@ -102,7 +103,7 @@ def searchAnime(request):
                 url = "https://anime-db.p.rapidapi.com/anime"
                 querystring = {"page":"1","size":"10","search":searchText,"sortOrder":"asc"}
                 headers = {
-                    "X-RapidAPI-Key": "40711ea0bcmshed7e321601919acp18162ajsneeda5cdb8609",
+                    "X-RapidAPI-Key": settings.ANIME_DB_KEY,
                     "X-RapidAPI-Host": "anime-db.p.rapidapi.com"
                 }
                 res = requests.get(url, headers=headers, params=querystring)
